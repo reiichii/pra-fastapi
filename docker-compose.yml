@@ -1,4 +1,4 @@
-version: '2'
+version: "2"
 services:
   mysql:
     build: ./mysql
@@ -11,12 +11,12 @@ services:
       MYSQL_DATABASE: test
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin
-  flask:
-    build: ./flask
+  fastapi:
+    build: ./fastapi
     ports:
-      - 5000:5000
+      - 8000:8000
     volumes:
-      - ./src:/var/www/flask
+      - ./src:/var/www/fastapi
     links:
       - mysql
     tty: true
@@ -24,4 +24,4 @@ services:
       TZ: Asia/Tokyo
       FLASK_APP: init.py
       FLASK_ENV: development
-    command: flask run -h 0.0.0.0
+    command: uvicorn main:app --reload --host 0.0.0.0
